@@ -1,8 +1,8 @@
 
 package config;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.*;
+import javax.swing.JOptionPane;
 
 public class Conexion {
     
@@ -14,8 +14,8 @@ public class Conexion {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventario","root","123456789");
-        } catch (Exception e) {
-            System.err.println("No se establecio conexion:Error: "+e);
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(null,"Conexion fallida: "+e,"Conexion",JOptionPane.ERROR_MESSAGE);
         }
         
     }// end method

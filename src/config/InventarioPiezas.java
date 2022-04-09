@@ -146,7 +146,7 @@ public class InventarioPiezas extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         
-        try {
+        /*try {
             
             PreparedStatement pst = cn.prepareStatement("INSERT INTO inventariopiezas (Id_Producto,Nombre_Producto,Cantidad_Disponible,Costo_Kilo,Tipo_Producto) VALUES (?,?,?,?,?)");
             
@@ -162,7 +162,7 @@ public class InventarioPiezas extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
+        */
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
@@ -215,7 +215,5 @@ public class InventarioPiezas extends javax.swing.JFrame {
     private javax.swing.JTextField txtTipoProducto;
     // End of variables declaration//GEN-END:variables
 
-    Conectar cc= new Conectar ();
-    Connection cn = cc.Conexion();
     
 }

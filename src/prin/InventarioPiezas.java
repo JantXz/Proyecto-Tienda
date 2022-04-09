@@ -2,9 +2,8 @@
 package prin;
 
 import config.Conexion;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,6 +22,9 @@ public class InventarioPiezas extends javax.swing.JFrame {
     public InventarioPiezas() {
         initComponents();
         setLocationRelativeTo(null);
+        consultar();
+        
+        
     }
 
     /**
@@ -50,9 +52,9 @@ public class InventarioPiezas extends javax.swing.JFrame {
         txtProducto = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         btnAgregar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        bntNuevo = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
@@ -82,6 +84,8 @@ public class InventarioPiezas extends javax.swing.JFrame {
 
         jLabel4.setText("Piezas Disponibles");
 
+        txtId.setEditable(false);
+        txtId.setEnabled(false);
         txtId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIdActionPerformed(evt);
@@ -151,11 +155,26 @@ public class InventarioPiezas extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("MODIFICAR");
+        btnModificar.setText("MODIFICAR");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("ELIMINAR");
+        btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("NUEVO");
+        bntNuevo.setText("NUEVO");
+        bntNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntNuevoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -165,11 +184,11 @@ public class InventarioPiezas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnAgregar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnModificar)
                 .addGap(80, 80, 80)
-                .addComponent(jButton2)
+                .addComponent(btnEliminar)
                 .addGap(80, 80, 80)
-                .addComponent(jButton3)
+                .addComponent(bntNuevo)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -178,9 +197,9 @@ public class InventarioPiezas extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btnModificar)
+                    .addComponent(btnEliminar)
+                    .addComponent(bntNuevo))
                 .addGap(14, 14, 14))
         );
 
@@ -188,15 +207,17 @@ public class InventarioPiezas extends javax.swing.JFrame {
 
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Nombre", "Piezas disponibles", "Precio", "Tipo de producto"
             }
         ));
+        Tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(Tabla);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -223,18 +244,18 @@ public class InventarioPiezas extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 200, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(180, 180, 180))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,8 +281,59 @@ public class InventarioPiezas extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
        Agregar();
        consultar();
+       Nuevo();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    private void TablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMouseClicked
+        
+        int fila = Tabla.getSelectedRow();
+        if (fila == -1){
+            
+            JOptionPane.showMessageDialog(null, "No se seleciono fila");
+            
+        } else {
+            
+            int id = Integer.parseInt((String)Tabla.getValueAt(fila,0) .toString());
+            String nomPro = (String) Tabla.getValueAt(fila, 1);
+            int piezas = Integer.parseInt((String)Tabla.getValueAt(fila,2) .toString());
+            int precio = Integer.parseInt((String)Tabla.getValueAt(fila,3) .toString());
+            String tipoProducto = (String) Tabla.getValueAt(fila, 1);
+            
+            
+            
+            txtId.setText(""+id);
+            txtNombre.setText(""+nomPro);
+            txtPiezas.setText(""+piezas);
+            txtPrecio.setText(""+precio);
+            txtProducto.setText(""+tipoProducto);
+            
+        }
+        
+    }//GEN-LAST:event_TablaMouseClicked
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        
+        Modificar();
+        consultar();
+        Nuevo();
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        
+        Eliminar ();
+        consultar ();
+        Nuevo();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void bntNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntNuevoActionPerformed
+        
+        Nuevo();
+        
+    }//GEN-LAST:event_bntNuevoActionPerformed
+
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -297,33 +369,74 @@ public class InventarioPiezas extends javax.swing.JFrame {
         });
     }
     
+    void Modificar(){
+        
+        String id = txtId.getText();
+        String nomPro = txtNombre.getText();
+        String piezas = txtPiezas.getText();
+        String precio = txtPrecio.getText();
+        String tipoProducto = txtProducto.getText();
+        
+        
+        try {
+            
+            if (id.equals("") || nomPro.equals("") || piezas.equals("") || precio.equals("") || tipoProducto.equals("")){
+                
+                JOptionPane.showMessageDialog(null, "Faltan ingresar datos");
+                limpiarTabla();
+            
+            } else {
+                
+                String sql = "UPDATE `inventario`.`inventariopiezas` SET `id_producto` = '" + id + "', `nombre_producto` = '" +nomPro + "', `piezas_disponibles` = '" + piezas + "', `precio` = '" + precio + "', `tipo_producto` = '" + tipoProducto + "' WHERE (`id_producto` = '" + id + "');" ;
+                //UPDATE `inventario`.`inventariopiezas` SET `id_producto` = '324', `nombre_producto` = 'Principal', `piezas_disponibles` = '24', `precio` = '14', `tipo_producto` = 'Galleta' WHERE (`id_producto` = '1234');
+
+
+                
+                conet = con1.getConnection();
+                st = conet.createStatement();
+                st.executeUpdate(sql);
+                
+                JOptionPane.showMessageDialog(null, "Datos de cliente modificados");
+                
+                limpiarTabla();
+                
+            }
+            
+        } catch (Exception e){
+
+        }//fin try catch
+    } //fin modificar
+    
     void consultar(){
         String sql = "select * from inventariopiezas";
-        
         
         try {
             
             conet = con1.getConnection();
             st = conet.createStatement();
             rs = st.executeQuery(sql);
-            Object[] cliente = new Object[4];
+            
+            Object[] datos = new Object[5];
             modelo = (DefaultTableModel) Tabla.getModel();
+            
             while (rs.next()){
-                cliente [0] = rs.getInt("Id");
-                cliente [1] = rs.getString("NombreProducto");
-                cliente [2] = rs.getInt("PiezasDisponibles");
-                cliente [3] = rs.getFloat("Precio");
-                cliente [4] = rs.getString("TipoProducto");
                 
-                modelo.addRow(cliente);
+                datos [0] = rs.getString("id_producto");
+                datos [1] = rs.getString("nombre_producto");
+                datos [2] = rs.getInt("piezas_disponibles");
+                datos [3] = rs.getInt("precio");
+                datos [4] = rs.getString("tipo_producto");
+                
+                modelo.addRow(datos);
              
             }
+            
             Tabla.setModel(modelo);
             
         }catch (Exception e){
             
         }
-    }
+    } //fin consultar
     
     void Agregar(){
         
@@ -335,42 +448,99 @@ public class InventarioPiezas extends javax.swing.JFrame {
         
         try {
             
-            if (id.equals("") || nomPro.equals("") || piezas.equals("") || precio.equals("") || tipoProducto.equals("")){
+            if (nomPro.equals("") || piezas.equals("") || precio.equals("") || tipoProducto.equals("")){
                 
                 JOptionPane.showMessageDialog(null, "Faltan ingresar datos");
+                limpiarTabla();
+            
             } else {
                 
-                String sql = "insert into inventariopiezas(Id_Producto,Nombre_Producto,Piezas_Disponibles,Precio,Tipo_Producto) values {'"+id+"','"+nomPro+"','"+piezas+"','"+precio+"','"+tipoProducto+"'}";
+                String sql = "INSERT INTO `inventario`.`inventariopiezas` (`id_producto`, `nombre_producto`, `piezas_disponibles`, `precio`, `tipo_producto`) VALUES ('"+id+"', '"+nomPro+"', '"+piezas+"', '"+precio+"', '"+tipoProducto+"');";
+                //INSERT INTO `inventario`.`inventariopiezas` (`id_producto`, `nombre_producto`, `piezas_disponibles`, `precio`, `tipo_producto`) VALUES ('1231', 'sope', '13', '123.4', 'Sopes');
+
+                
                 conet = con1.getConnection();
                 st = conet.createStatement();
                 st.executeUpdate(sql);
                 
                 JOptionPane.showMessageDialog(null, "Nuevo producto agregado");
                 
-               limpiarTabla();
+                limpiarTabla();
+                
+            }
+            
+        } catch (Exception e){
+
+        }//fin try catch
+        
+    }//fin agregar
+    
+    void limpiarTabla(){
+        for (int i = 0 ; i<= Tabla.getRowCount() ; i++){
+            modelo.removeRow(i);
+            i = i-1;
+        }
+    } //fin limpiar tabla
+    
+    void Eliminar(){
+        
+        int fila = Tabla.getSelectedRow();
+        
+        try{
+            
+            if (fila<0){
+                
+                JOptionPane.showInternalMessageDialog(null, "Producto no selecionado");
+                limpiarTabla();
+                
+            } else{
+                
+                int id = Integer.parseInt((String)Tabla.getValueAt(fila,0) .toString());
+                
+                String sql = "DELETE FROM `inventario`.`inventariopiezas` WHERE (`id_producto` = '" + id + "');";
+                // DELETE FROM `inventario`.`inventariopiezas` WHERE (`id_producto` = '1234');
+                
+                conet = con1.getConnection();
+                st = conet.createStatement();
+                st.executeUpdate(sql);
+                
+                JOptionPane.showMessageDialog(null, "Producto eliminado");
+                
+                limpiarTabla();
                 
             }
             
         } catch (Exception e){
             
-        }
+
+        }//fin try catch
         
-    }
+    } //fin eliminar
     
-    void limpiarTabla(){
-        for (int i = 0;i<= Tabla.getRowCount(); i++){
-            modelo.removeRow(i);
-            i = i-1;
-        }
-    }
+    void Nuevo (){
+        
+        Random random = new Random();
+        int cod = random.nextInt(1000 + 1) + 1;
+        String cof= cod+"";
+        
+        txtId.setText(cof);
+        txtNombre.setText("");
+        txtPiezas.setText("");
+        txtPrecio.setText("");
+        txtProducto.setText("");
+        
+        
+        
+        txtId.requestFocus();
+    } //fin Nuevo
    
             
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tabla;
+    private javax.swing.JButton bntNuevo;
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
