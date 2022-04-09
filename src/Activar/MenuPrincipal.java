@@ -169,6 +169,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         InventarioPiezas inPiezas = new InventarioPiezas();
         inPiezas.setVisible(true);
         dispose();
+        
     }//GEN-LAST:event_btnProductosPiezasActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
