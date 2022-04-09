@@ -5,6 +5,7 @@
 package Inventarios;
 package config.Conexion;
 
+import Activar.MenuPrincipal;
 import config.Conexion;
 import java.sql.*;
 import java.util.Random;
@@ -284,7 +285,9 @@ public class InventarioKilos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void btnVolverAlMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverAlMenuActionPerformed
-        // TODO add your handling code here:
+        MenuPrincipal menu = new MenuPrincipal();
+        menu.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnVolverAlMenuActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed

@@ -1,6 +1,7 @@
 
 package Inventarios;
 import config.Conexion;
+import Activar.MenuPrincipal;
 
 import java.sql.*;
 import java.util.Random;
@@ -55,7 +56,7 @@ public class InventarioPiezas extends javax.swing.JFrame {
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         bntNuevo = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnMenu = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
@@ -177,7 +178,12 @@ public class InventarioPiezas extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("VOLVER AL MENU");
+        btnMenu.setText("VOLVER AL MENU");
+        btnMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -190,7 +196,7 @@ public class InventarioPiezas extends javax.swing.JFrame {
                     .addComponent(bntNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+                    .addComponent(btnMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -205,7 +211,7 @@ public class InventarioPiezas extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(bntNuevo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1))
+                .addComponent(btnMenu))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Base de Datos"));
@@ -296,13 +302,11 @@ public class InventarioPiezas extends javax.swing.JFrame {
             
         } else {
             
-            int id = Integer.parseInt((String)Tabla.getValueAt(fila,0) .toString());
+            String id = (String) Tabla.getValueAt(fila, 0);
             String nomPro = (String) Tabla.getValueAt(fila, 1);
             int piezas = Integer.parseInt((String)Tabla.getValueAt(fila,2) .toString());
-            int precio = Integer.parseInt((String)Tabla.getValueAt(fila,3) .toString());
-            String tipoProducto = (String) Tabla.getValueAt(fila, 1);
-            
-            
+            String precio = (String) Tabla.getValueAt(fila, 3);
+            String tipoProducto = (String) Tabla.getValueAt(fila, 4);
             
             txtId.setText(""+id);
             txtNombre.setText(""+nomPro);
@@ -333,6 +337,13 @@ public class InventarioPiezas extends javax.swing.JFrame {
         Nuevo();
         
     }//GEN-LAST:event_bntNuevoActionPerformed
+
+    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
+        
+        MenuPrincipal menu = new MenuPrincipal();
+        menu.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnMenuActionPerformed
 
     
     
@@ -427,7 +438,7 @@ public class InventarioPiezas extends javax.swing.JFrame {
                 datos [0] = rs.getString("id_producto");
                 datos [1] = rs.getString("nombre_producto");
                 datos [2] = rs.getInt("piezas_disponibles");
-                datos [3] = rs.getInt("precio");
+                datos [3] = rs.getString("precio");
                 datos [4] = rs.getString("tipo_producto");
                 
                 modelo.addRow(datos);
@@ -524,7 +535,7 @@ public class InventarioPiezas extends javax.swing.JFrame {
         
         Random random = new Random();
         int cod = random.nextInt(1000 + 1) + 1;
-        String cof= cod+"";
+        String cof= "Pi"+cod+"";
         
         txtId.setText(cof);
         txtNombre.setText("");
@@ -543,8 +554,8 @@ public class InventarioPiezas extends javax.swing.JFrame {
     private javax.swing.JButton bntNuevo;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnMenu;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
