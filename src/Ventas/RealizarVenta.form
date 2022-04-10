@@ -46,7 +46,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="200" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="jLabel2" min="-2" pref="175" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
           </Group>
@@ -241,6 +241,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Terminar dia "/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtterminarDiaActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

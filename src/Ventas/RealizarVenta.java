@@ -4,6 +4,8 @@
  */
 package Ventas;
 
+import Inventarios.InventarioPiezas;
+
 /**
  *
  * @author Jonathan
@@ -138,6 +140,11 @@ public class RealizarVenta extends javax.swing.JFrame {
         });
 
         txtterminarDia.setText("Terminar dia ");
+        txtterminarDia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtterminarDiaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -168,7 +175,7 @@ public class RealizarVenta extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(200, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(150, 150, 150))
             .addGroup(layout.createSequentialGroup()
@@ -207,12 +214,20 @@ public class RealizarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtcantidadActionPerformed
 
     private void txtañidirProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtañidirProductoActionPerformed
-        // TODO add your handling code here:
+           
     }//GEN-LAST:event_txtañidirProductoActionPerformed
 
     private void txtfinalizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfinalizarVentaActionPerformed
-        // TODO add your handling code here:
+        totalventa intotal = new totalventa();
+        intotal.setVisible(true);
+        dispose();
     }//GEN-LAST:event_txtfinalizarVentaActionPerformed
+
+    private void txtterminarDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtterminarDiaActionPerformed
+        ResumenDelDia inresumendeldia = new ResumenDelDia();
+        inresumendeldia.setVisible(true);
+        dispose();      
+    }//GEN-LAST:event_txtterminarDiaActionPerformed
 
     /**
      * @param args the command line arguments
